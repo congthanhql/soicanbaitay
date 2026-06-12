@@ -30,7 +30,6 @@
     min-height: 100vh;
   }
 
-  /* ── STARS ── */
   .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
   .star {
     position: absolute; border-radius: 50%; background: #fff;
@@ -38,7 +37,6 @@
   }
   @keyframes twinkle { to { opacity: var(--o); } }
 
-  /* ── LOGIN OVERLAY ── */
   #login-overlay {
     position: fixed; inset: 0; z-index: 100;
     background: var(--bg);
@@ -95,9 +93,7 @@
     margin-top: 10px;
     min-height: 20px;
   }
-  .login-loading { color: var(--muted); font-size: 0.82rem; margin-top: 10px; }
 
-  /* ── LAYOUT ── */
   .wrapper {
     position: relative; z-index: 1;
     max-width: 820px; margin: 0 auto;
@@ -106,7 +102,6 @@
   }
   .wrapper.visible { display: block; }
 
-  /* ── HEADER ── */
   header { text-align: center; margin-bottom: 40px; }
   .ornament {
     display: flex; align-items: center; justify-content: center;
@@ -125,7 +120,6 @@
   }
   .subtitle { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
 
-  /* User info bar */
   .user-bar {
     display: flex; justify-content: flex-end; align-items: center;
     gap: 10px; margin-bottom: 20px;
@@ -140,7 +134,6 @@
   }
   .logout-btn:hover { border-color: var(--co); color: var(--co); }
 
-  /* ── SEARCH ── */
   .search-wrap { position: relative; margin-bottom: 12px; }
   .search-icon {
     position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
@@ -157,7 +150,6 @@
   #search::placeholder { color: var(--muted); }
   #search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
 
-  /* ── FILTERS ── */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
   .filter-btn {
     padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
@@ -175,26 +167,20 @@
 
   .count { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; letter-spacing: 0.06em; }
 
-  /* ── STATUS BAR ── */
   .db-status {
     display: flex; align-items: center; gap: 6px;
     font-size: 0.72rem; color: var(--muted); margin-bottom: 20px;
   }
-  .db-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--muted);
-  }
+  .db-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
   .db-dot.online { background: #4caf80; box-shadow: 0 0 6px #4caf8066; }
   .db-dot.offline { background: var(--co); }
 
-  /* ── GRID ── */
   #result {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
   }
 
-  /* ── CARD ── */
   .card {
     background: var(--card-bg); border: 1px solid var(--border);
     border-radius: 12px; padding: 20px;
@@ -234,7 +220,6 @@
   .card[data-suit="Bích"]  .suit-label { color: var(--bich); }
   .card-meaning { font-size: 0.875rem; line-height: 1.65; color: #c4b8dc; }
 
-  /* ── SKELETON ── */
   .skeleton {
     background: var(--card-bg); border: 1px solid var(--border);
     border-radius: 12px; padding: 20px; height: 130px;
@@ -317,29 +302,28 @@
 
   <div class="count" id="count">Đang tải...</div>
   <div id="result">
-    <!-- skeleton placeholders -->
     <div class="skeleton"></div><div class="skeleton"></div>
     <div class="skeleton"></div><div class="skeleton"></div>
   </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getDatabase, ref, onValue, set, get }
+import { getDatabase, ref, onValue, set }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ── CONFIG ── */
+/* ── FIREBASE CONFIG ── */
 const firebaseConfig = {
-  apiKey: "AIzaSyplaceholder_replaceWithYourKey",   // ← thay bằng API key thật
-  authDomain: "csdl-bio.firebaseapp.com",
-  databaseURL: "https://csdl-bio-default-rtdb.firebaseio.com/",
-  projectId: "csdl-bio",
-  storageBucket: "csdl-bio.appspot.com",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyA-G3BfucCstuMlQDKDsQVu3daQ854tuCQ",
+  authDomain: "csdl-login.firebaseapp.com",
+  databaseURL: "https://csdl-login-default-rtdb.firebaseio.com",
+  projectId: "csdl-login",
+  storageBucket: "csdl-login.firebasestorage.app",
+  messagingSenderId: "1036020118468",
+  appId: "1:1036020118468:web:6fe17be2597334f9986a91",
+  measurementId: "G-WGC5R6VVBK"
 };
 
 const app  = initializeApp(firebaseConfig);
@@ -355,7 +339,7 @@ for (let i = 0; i < 90; i++) {
   starsEl.appendChild(s);
 }
 
-/* ── LOCAL DATA (fallback nếu Firebase chưa có) ── */
+/* ── LOCAL DATA (fallback) ── */
 const LOCAL_CARDS = [
   { name:"Át Cơ",  suit:"Cơ", label:"Gia tiên · Tình cảm · Tâm linh", symbol:"♥", meaning:"Dấu hiệu có căn, có thể là căn đồng, có gia tiên độ trì." },
   { name:"2 Cơ",   suit:"Cơ", label:"Gia tiên · Tình cảm · Tâm linh", symbol:"♥", meaning:"Có sự kết nối âm – dương, có thể là duyên âm. Gia tiên còn yêu thương." },
@@ -414,13 +398,13 @@ const LOCAL_CARDS = [
 /* ── STATE ── */
 let cards = [];
 let activeSuit = 'all';
-const searchEl  = document.getElementById('search');
-const resultEl  = document.getElementById('result');
-const countEl   = document.getElementById('count');
-const dbDot     = document.getElementById('db-dot');
-const dbLabel   = document.getElementById('db-label');
-const overlay   = document.getElementById('login-overlay');
-const appEl     = document.getElementById('app');
+const searchEl = document.getElementById('search');
+const resultEl = document.getElementById('result');
+const countEl  = document.getElementById('count');
+const dbDot    = document.getElementById('db-dot');
+const dbLabel  = document.getElementById('db-label');
+const overlay  = document.getElementById('login-overlay');
+const appEl    = document.getElementById('app');
 
 /* ── RENDER ── */
 function render() {
@@ -449,21 +433,19 @@ function render() {
 }
 
 /* ── LOAD DATA FROM FIREBASE ── */
-function loadCards(user) {
+function loadCards() {
   const cardsRef = ref(db, 'labai');
   onValue(cardsRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      // Firebase trả về object, chuyển sang array
       cards = Array.isArray(data) ? data : Object.values(data);
       dbDot.className = 'db-dot online';
       dbLabel.textContent = 'Firebase · ' + cards.length + ' lá bài';
     } else {
-      // Chưa có data trên Firebase → seed từ local data
       cards = LOCAL_CARDS;
       set(ref(db, 'labai'), LOCAL_CARDS).then(() => {
         dbDot.className = 'db-dot online';
-        dbLabel.textContent = 'Firebase · Đã đồng bộ';
+        dbLabel.textContent = 'Firebase · Đã đồng bộ ' + LOCAL_CARDS.length + ' lá bài';
       });
     }
     render();
@@ -482,7 +464,7 @@ onAuthStateChanged(auth, (user) => {
     overlay.style.display = 'none';
     appEl.classList.add('visible');
     document.getElementById('user-email').textContent = user.email;
-    loadCards(user);
+    loadCards();
   } else {
     overlay.style.display = 'flex';
     appEl.classList.remove('visible');
@@ -494,24 +476,27 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   const email = document.getElementById('login-email').value.trim();
   const pass  = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-error');
+  const btn   = document.getElementById('login-btn');
   errEl.textContent = '';
   if (!email || !pass) { errEl.textContent = 'Vui lòng nhập email và mật khẩu.'; return; }
-  document.getElementById('login-btn').textContent = 'Đang đăng nhập...';
+  btn.textContent = 'Đang đăng nhập...';
+  btn.disabled = true;
   try {
     await signInWithEmailAndPassword(auth, email, pass);
   } catch (e) {
     const msg = {
-      'auth/invalid-credential': 'Email hoặc mật khẩu không đúng.',
-      'auth/user-not-found': 'Tài khoản không tồn tại.',
-      'auth/wrong-password': 'Mật khẩu không đúng.',
-      'auth/too-many-requests': 'Quá nhiều lần thử. Vui lòng thử lại sau.',
-    }[e.code] || 'Đăng nhập thất bại: ' + e.message;
+      'auth/invalid-credential':  'Email hoặc mật khẩu không đúng.',
+      'auth/user-not-found':      'Tài khoản không tồn tại.',
+      'auth/wrong-password':      'Mật khẩu không đúng.',
+      'auth/too-many-requests':   'Quá nhiều lần thử. Vui lòng thử lại sau.',
+      'auth/invalid-email':       'Email không hợp lệ.',
+    }[e.code] || ('Đăng nhập thất bại: ' + e.message);
     errEl.textContent = msg;
-    document.getElementById('login-btn').textContent = 'Đăng nhập';
+    btn.textContent = 'Đăng nhập';
+    btn.disabled = false;
   }
 });
 
-// Enter key support
 ['login-email','login-pass'].forEach(id => {
   document.getElementById(id).addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('login-btn').click();
